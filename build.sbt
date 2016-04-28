@@ -6,11 +6,25 @@ version := "0.1.0"
 
 description := "Demo application for the Makka platform"
 
-scalaVersion := "2.11.8"
+scalaVersion in Global := "2.11.8"
 
-libraryDependencies ++= Seq(
-	"com.github.jurajburian" %% "makka" % "1.0.0"
+cancelable in Global := true
+
+lazy val root = project.in(file(".")).dependsOn(pingMakka, pongMakka).settings(
+	mainClass in (Compile, run) := Some("com.github.jurajburian.makka.Main")
 )
 
-// boot Makka
-mainClass in (Compile, run) := Some("com.github.jurajburian.makka.Main")
+lazy val pingMakka = project.in(file("pingMakka")).settings(
+	name := "makka-ping",
+	libraryDependencies ++= Seq(
+		"com.github.jurajburian" %% "makka" % "1.0.0"
+	)
+)
+
+lazy val pongMakka = project.in(file("pongMakka")).settings(
+	name := "makka-pong",
+	libraryDependencies ++= Seq(
+		"com.github.jurajburian" %% "makka" % "1.0.0"
+	)
+)
+
