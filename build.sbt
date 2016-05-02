@@ -8,17 +8,18 @@ description := "Demo application for the Makka platform"
 
 scalaVersion in Global := "2.11.8"
 
-//cancelable in Global := true
+cancelable in Global := true
 
 lazy val root = project.in(file(".")).dependsOn(pingMakka, pongMakka, shared).settings(
-	mainClass in (Compile, run) := Some("com.github.jurajburian.makka.Main")
+	mainClass in (Compile, run) := Some("com.github.jurajburian.makka.Makka")
 )
 
 lazy val pingMakka = project.in(file("pingMakka")).settings(
 	name := "makka-ping",
 	libraryDependencies ++= Seq(
 		"com.github.jurajburian" %% "makka" % "1.0.0",
-		"org.scalaz" %% "scalaz-core" % "7.2.2"
+		"org.scalaz" %% "scalaz-core" % "7.2.2",
+		"com.typesafe.akka" %% "akka-cluster-tools" % "2.4.4"
 	)
 ).dependsOn("shared")
 
@@ -26,7 +27,8 @@ lazy val pongMakka = project.in(file("pongMakka")).settings(
 	name := "makka-pong",
 	libraryDependencies ++= Seq(
 		"com.github.jurajburian" %% "makka" % "1.0.0",
-		"org.scalaz" %% "scalaz-core" % "7.2.2"
+		"org.scalaz" %% "scalaz-core" % "7.2.2",
+		"com.typesafe.akka" %% "akka-cluster-tools" % "2.4.4"
 	)
 ).dependsOn("shared")
 
