@@ -10,7 +10,7 @@ scalaVersion in Global := "2.11.8"
 
 cancelable in Global := true
 
-lazy val root = project.in(file(".")).dependsOn(pingMakka, pongMakka, shared).settings(
+lazy val root = project.in(file(".")).dependsOn(pingMakka, pongMakka, httpMakka, shared).settings(
 	mainClass in (Compile, run) := Some("com.github.jurajburian.makka.Makka")
 )
 
@@ -31,6 +31,14 @@ lazy val pongMakka = project.in(file("pongMakka")).settings(
 		"com.typesafe.akka" %% "akka-cluster-tools" % "2.4.4"
 	)
 ).dependsOn("shared")
+
+lazy val httpMakka = project.in(file("httpMakka")).settings(
+	name := "makka-http",
+	libraryDependencies ++= Seq(
+		"com.github.jurajburian" %% "makka-akka-http" % "1.0.0",
+		"org.scalaz" %% "scalaz-core" % "7.2.2"
+	)
+)
 
 lazy val shared = project.in(file("shared")).settings(
 	name := "shared"
