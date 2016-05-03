@@ -10,8 +10,8 @@ class HttpModule extends Module with Initializable {
   override def initialize(ctx: Context): Boolean = {
     if (ctx.initialized[ConfigModule] && ctx.initialized[LogModule]
 			&& ctx.initialized[AkkaModule] && ctx.initialized[AkkaHttpModule]) {
-
       ctx.inject[RouteRegistry] exists bootstrap
+      true
     } else {
       false
     }
