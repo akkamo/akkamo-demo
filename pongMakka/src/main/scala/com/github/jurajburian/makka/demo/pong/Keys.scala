@@ -1,4 +1,4 @@
-package com.github.jurajburian.makka.demo.shared
+package com.github.jurajburian.makka.demo.pong
 
 object Keys {
 

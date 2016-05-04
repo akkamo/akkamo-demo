@@ -3,7 +3,7 @@ package com.github.jurajburian.makka.demo.pong
 import akka.actor.{Actor, ActorRef}
 import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.{Publish, Put}
-import com.github.jurajburian.makka.demo.shared.{Keys, PingPongMessage}
+
 
 class ThirdActor(sysName: String) extends Actor {
 
@@ -11,10 +11,10 @@ class ThirdActor(sysName: String) extends Actor {
 
 
 	override def receive: Receive = {
-		case m@PingPongMessage(passed) => publish(m)
+		case m@PongMessage(passed) => publish(m)
 	}
 
-	private def publish(m: PingPongMessage): Unit = {
+	private def publish(m: PongMessage): Unit = {
 		mediator ! Publish(Keys.Topic, m copy sign(m.passed))
 	}
 

@@ -3,9 +3,7 @@ package com.github.jurajburian.makka.demo.ping
 import akka.actor.{Actor, ActorRef}
 import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.Subscribe
-import com.github.jurajburian.makka.demo.shared.{Keys, PingPongMessage}
-
-import scalaz._, Scalaz._
+import com.github.jurajburian.makka.demo.pong.{Keys, PongMessage}
 
 class FourthActor(sysName: String) extends Actor {
 
@@ -14,7 +12,7 @@ class FourthActor(sysName: String) extends Actor {
 	mediator ! Subscribe(Keys.Topic, self)
 
 	override def receive: Receive = {
-		case m@PingPongMessage(passed) => println("RECEIVED: " + (passed |> sign |> format))
+		case m@PongMessage(passed) => println("RECEIVED: " + (format(sign(passed))))
 	}
 
 	private def format(passed: List[String]) = passed.reverse.mkString(" -> ")

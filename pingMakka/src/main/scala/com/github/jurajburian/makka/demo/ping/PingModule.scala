@@ -1,38 +1,43 @@
 package com.github.jurajburian.makka.demo.ping
 
 import akka.actor.{ActorRef, ActorSystem, Props}
-import akka.event.LoggingAdapter
 import com.github.jurajburian.makka._
-import com.github.jurajburian.makka.demo.shared.{Keys, PingPongMessage}
+import com.github.jurajburian.makka.demo.pong.{Keys, PongMessage, PongModule}
 
-import scalaz.Scalaz._
+import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
 
 class PingModule extends Module with Initializable with Runnable {
 
 	var firstActor: ActorRef = _
 
 	@throws[InitializationError]("If initialization can't be finished")
-	override def initialize(ctx: Context): Boolean = {
-		val system1: Option[ActorSystem] = ctx.inject[ActorSystem](Keys.ActorSystem1)
-		val system2: Option[ActorSystem] = ctx.inject[ActorSystem]
-		val secondActor: Option[ActorRef] = ctx.inject[ActorRef]("secondActor")
-		val log: Option[LoggingAdapter] = ctx.inject[LoggingAdapterFactory] map (_ apply getClass)
+	override def initialize(ctx: Context): Boolean = Try {
+		if (ctx.initialized[AkkaModule] && ctx.initialized[LogModule] && ctx.initialized[PongModule]) {
+			val system1 = ctx.inject[ActorSystem](Keys.ActorSystem1).get
+			val system2 = ctx.inject[ActorSystem].get
+			val secondActor = ctx.inject[ActorRef]("secondActor").get
+			val log = ctx.inject[LoggingAdapterFactory].map(_ (getClass)).get
 
-		(system1 |@| system2 |@| secondActor |@| log) (bootstrap) getOrElse false
-	}
+			log.info("Initializing 'Ping' Makka module")
 
-	private def bootstrap(sys1: ActorSystem, sys2: ActorSystem,
-												secondActor: ActorRef, log: LoggingAdapter): Boolean = {
-
-		log.info("Initializing 'Ping' Makka module")
-		firstActor = sys1.actorOf(Props(new FirstActor(secondActor, sys1.name)))
-		val fourthActor: ActorRef = sys1.actorOf(Props(new FourthActor(sys1.name)))
-
-		true
+			firstActor = system1.actorOf(Props(new FirstActor(secondActor, system1.name)))
+			val fourthActor: ActorRef = system1.actorOf(Props(new FourthActor(system1.name)))
+			true
+		} else {
+			false
+		}
+	} match {
+		case Success(x) => x
+		case Failure(th) => throw InitializationError(s"Can't initialize $toString", th)
 	}
 
 	override def run(ctx: Context): Unit = {
-		firstActor ! PingPongMessage(List.empty[String])
+		implicit val system1 = ctx.inject[ActorSystem](Keys.ActorSystem1).get.dispatcher
+		Future{
+			Try(Thread.sleep(1000))
+			firstActor ! PongMessage(List.empty[String])
+		}
 	}
 
 	override def toString = getClass.getSimpleName
