@@ -9,6 +9,5 @@ class FirstActor(val secondActor: ActorRef, sysName: String) extends Actor {
 		case m@PongMessage(passed) => secondActor ! m.copy(sign(passed))
 	}
 
-	private def sign(passed: List[String]): List[String] =
-		s"${getClass.getSimpleName}@$sysName" :: passed
+	private def sign(passed: List[String]): List[String] = s"${getClass.getSimpleName}@$sysName" :: passed
 }

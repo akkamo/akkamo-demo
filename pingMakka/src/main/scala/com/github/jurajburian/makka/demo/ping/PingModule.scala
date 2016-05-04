@@ -11,6 +11,7 @@ class PingModule extends Module with Initializable with Runnable {
 
 	var firstActor: ActorRef = _
 
+
 	@throws[InitializationError]("If initialization can't be finished")
 	override def initialize(ctx: Context): Boolean = Try {
 		if (ctx.initialized[AkkaModule] && ctx.initialized[LogModule] && ctx.initialized[PongModule]) {

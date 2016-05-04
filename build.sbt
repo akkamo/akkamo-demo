@@ -1,3 +1,5 @@
+import sbt.dsl._
+
 organization := "com.github.jurajburian"
 
 name := "makka-demo"
@@ -10,9 +12,14 @@ scalaVersion in Global := "2.11.8"
 
 cancelable in Global := true
 
-lazy val root = project.in(file(".")).dependsOn(pingMakka, pongMakka, httpMakka).settings(
-	mainClass in (Compile, run) := Some("com.github.jurajburian.makka.Makka")
-)
+fork in (IntegrationTest, run) := true
+
+Revolver.settings
+
+lazy val makkaDemo = project.in(file(".")).dependsOn(pingMakka, pongMakka, httpMakka).settings(
+	mainClass in Compile := Some("com.github.jurajburian.makka.Makka"),
+	name := "makka-demo"
+).enablePlugins(JavaAppPackaging)
 
 lazy val pingMakka = project.in(file("pingMakka")).settings(
 	name := "makka-ping",
@@ -37,4 +44,3 @@ lazy val httpMakka = project.in(file("httpMakka")).settings(
 		"org.scalaz" %% "scalaz-core" % "7.2.2"
 	)
 )
-

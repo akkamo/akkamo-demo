@@ -17,6 +17,5 @@ class FourthActor(sysName: String) extends Actor {
 
 	private def format(passed: List[String]) = passed.reverse.mkString(" -> ")
 
-	private def sign(passed: List[String]): List[String] =
-		s"${getClass.getSimpleName}@$sysName" :: passed
+	private def sign(passed: List[String]): List[String] = s"${getClass.getSimpleName}@$sysName" :: passed
 }
