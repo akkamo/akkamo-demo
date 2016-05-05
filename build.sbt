@@ -1,5 +1,3 @@
-import sbt.dsl._
-
 organization := "com.github.jurajburian"
 
 name := "makka-demo"
@@ -12,7 +10,7 @@ scalaVersion in Global := "2.11.8"
 
 cancelable in Global := true
 
-fork in (IntegrationTest, run) := true
+fork in(IntegrationTest, run) := true
 
 Revolver.settings
 
