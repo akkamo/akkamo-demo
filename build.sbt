@@ -15,9 +15,9 @@ fork in(IntegrationTest, run) := true
 Revolver.settings
 
 lazy val makkaDemo = project.in(file(".")).dependsOn(pingMakka, pongMakka, httpMakka).settings(
-	mainClass in Compile := Some("com.github.jurajburian.makka.Makka"),
 	name := "makka-demo"
-).enablePlugins(JavaAppPackaging)
+	//mainClass in Compile := Some("com.github.jurajburian.makka.Makka")
+).enablePlugins(JavaAppPackaging, MakkaSbtPlugin)
 
 lazy val pingMakka = project.in(file("pingMakka")).settings(
 	name := "makka-ping",

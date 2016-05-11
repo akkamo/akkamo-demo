@@ -27,7 +27,4 @@ class PongModule extends Module with Initializable {
 		case Success(x) => x
 		case Failure(th) => throw InitializationError(s"Can't initialize $toString", th)
 	}
-
-	override def toString = getClass.getSimpleName
-
 }

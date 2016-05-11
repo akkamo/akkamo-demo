@@ -40,6 +40,4 @@ class PingModule extends Module with Initializable with Runnable {
 			firstActor ! PongMessage(List.empty[String])
 		}
 	}
-
-	override def toString = getClass.getSimpleName
 }

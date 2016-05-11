@@ -27,6 +27,4 @@ class HttpModule extends Module with Initializable {
     registry.register(route)
     true
   }
-
-  override def toString = getClass.getSimpleName
 }
