@@ -1,8 +1,8 @@
-package com.github.jurajburian.makka.demo.http
+package eu.akkamo.demo.http
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import com.github.jurajburian.makka.{AkkaModule, LogModule, _}
+import eu.akkamo.{AkkaModule, LogModule, _}
 
 class HttpModule extends Module with Initializable {
 

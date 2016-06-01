@@ -1,7 +1,7 @@
-package com.github.jurajburian.makka.demo.ping
+package eu.akkamo.demo.ping
 
 import akka.actor.{Actor, ActorRef}
-import com.github.jurajburian.makka.demo.pong.PongMessage
+import eu.akkamo.demo.pong.PongMessage
 
 class FirstActor(val secondActor: ActorRef, sysName: String) extends Actor {
 

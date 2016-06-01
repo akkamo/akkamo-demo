@@ -1,4 +1,4 @@
-package com.github.jurajburian.makka.demo.pong
+package eu.akkamo.demo.pong
 
 import akka.actor.{Actor, ActorRef}
 

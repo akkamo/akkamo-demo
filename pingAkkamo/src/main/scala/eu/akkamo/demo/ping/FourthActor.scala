@@ -1,9 +1,9 @@
-package com.github.jurajburian.makka.demo.ping
+package eu.akkamo.demo.ping
 
 import akka.actor.{Actor, ActorRef}
 import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.Subscribe
-import com.github.jurajburian.makka.demo.pong.{Keys, PongMessage}
+import eu.akkamo.demo.pong.{Keys, PongMessage}
 
 class FourthActor(sysName: String) extends Actor {
 

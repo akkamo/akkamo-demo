@@ -1,8 +1,8 @@
-package com.github.jurajburian.makka.demo.ping
+package eu.akkamo.demo.ping
 
 import akka.actor.{ActorRef, ActorSystem, Props}
-import com.github.jurajburian.makka._
-import com.github.jurajburian.makka.demo.pong.{Keys, PongMessage, PongModule}
+import eu.akkamo._
+import eu.akkamo.demo.pong.{Keys, PongMessage, PongModule}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
@@ -20,7 +20,7 @@ class PingModule extends Module with Initializable with Runnable {
 			val secondActor = ctx.inject[ActorRef]("secondActor").get
 			val log = ctx.inject[LoggingAdapterFactory].map(_ (getClass)).get
 
-			log.info("Initializing 'Ping' Makka module")
+			log.info("Initializing 'Ping' Akkamo module")
 
 			firstActor = system1.actorOf(Props(new FirstActor(secondActor, system1.name)))
 			val fourthActor: ActorRef = system1.actorOf(Props(new FourthActor(system1.name)))
