@@ -1,10 +1,10 @@
-organization := "com.github.jurajburian"
+organization := "eu.akkamo"
 
-name := "makka-demo"
+name := "akkamo-demo"
 
 version := "1.0.0-SNAPSHOT"
 
-description := "Demo application for the Makka platform"
+description := "Demo application for the Akkamo platform"
 
 scalaVersion in Global := "2.11.8"
 
@@ -12,33 +12,33 @@ cancelable in Global := true
 
 fork in(IntegrationTest, run) := false
 
-lazy val makkaVersion = "1.0.0-SNAPSHOT"
+lazy val akkamoVersion = "1.0.0-SNAPSHOT"
 
-lazy val makkaDemo = project.in(file(".")).dependsOn(pingMakka, pongMakka, httpMakka).settings(
-	name := "makka-demo",
-	mainClass in Compile := Some("com.github.jurajburian.makka.Makka")
-).enablePlugins(JavaAppPackaging, MakkaSbtPlugin)
+lazy val akkamoDemo = project.in(file(".")).dependsOn(pingAkkamo, pongAkkamo, httpAkkamo).settings(
+	name := "akkamo-demo",
+	mainClass in Compile := Some("eu.akkamo.Akkamo")
+).enablePlugins(JavaAppPackaging, AkkamoSbtPlugin)
 
-lazy val pingMakka = project.in(file("pingMakka")).settings(
-	name := "makka-ping",
+lazy val pingAkkamo = project.in(file("pingAkkamo")).settings(
+	name := "akkamo-ping",
 	libraryDependencies ++= Seq(
-		"com.github.jurajburian" %% "makka" % makkaVersion,
+		"eu.akkamo" %% "akkamo" % akkamoVersion,
 		"com.typesafe.akka" %% "akka-cluster-tools" % "2.4.4"
 	)
-).dependsOn(pongMakka)
+).dependsOn(pongAkkamo)
 
-lazy val pongMakka = project.in(file("pongMakka")).settings(
-	name := "makka-pong",
+lazy val pongAkkamo = project.in(file("pongAkkamo")).settings(
+	name := "akkamo-pong",
 	libraryDependencies ++= Seq(
-		"com.github.jurajburian" %% "makka" % makkaVersion,
+		"eu.akkamo" %% "akkamo" % akkamoVersion,
 		"com.typesafe.akka" %% "akka-cluster-tools" % "2.4.4"
 	)
 )
 
-lazy val httpMakka = project.in(file("httpMakka")).settings(
-	name := "makka-http",
+lazy val httpAkkamo = project.in(file("httpAkkamo")).settings(
+	name := "akkamo-http",
 	libraryDependencies ++= Seq(
-		"com.github.jurajburian" %% "makka-akka-http" % makkaVersion,
+		"eu.akkamo" %% "akkamo-akka-http" % akkamoVersion,
 		"org.scalaz" %% "scalaz-core" % "7.2.2"
 	)
 )
