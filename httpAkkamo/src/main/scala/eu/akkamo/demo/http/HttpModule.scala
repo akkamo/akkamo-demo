@@ -2,29 +2,24 @@ package eu.akkamo.demo.http
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import eu.akkamo.{AkkaModule, LogModule, _}
+import eu.akkamo._
+
 
 class HttpModule extends Module with Initializable {
 
-  @scala.throws[InitializationError]("If initialization can't be finished")
-  override def initialize(ctx: Context): Boolean = {
-    if (ctx.initialized[ConfigModule] && ctx.initialized[LogModule]
-			&& ctx.initialized[AkkaModule] && ctx.initialized[AkkaHttpModule]) {
-      ctx.inject[RouteRegistry] exists bootstrap
-      true
-    } else {
-      false
-    }
-  }
+	override def initialize(ctx: Context) = {
+		ctx.inject[RouteRegistry].map(bootstrap)
+	}
 
-  private def bootstrap(registry: RouteRegistry): Boolean = {
-    val route: Route = get {
-      path("todo") {
-        complete("HELLO, world!")
-      }
-    }
+	override def dependencies(dependencies: Dependency): Dependency =
+		dependencies.&&[ConfigModule].&&[LogModule].&&[AkkaModule].&&[AkkaModule]
 
-    registry.register(route)
-    true
-  }
+	private def bootstrap(registry: RouteRegistry) = {
+		val route: Route = get {
+			path("todo") {
+				complete("HELLO, world!")
+			}
+		}
+		registry.register(route)
+	}
 }
