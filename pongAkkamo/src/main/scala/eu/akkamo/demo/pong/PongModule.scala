@@ -3,10 +3,12 @@ package eu.akkamo.demo.pong
 import akka.actor.{ActorRef, ActorSystem, Props}
 import eu.akkamo._
 
+import scala.util.Try
+
 
 class PongModule extends Module with Initializable {
 
-	override def initialize(ctx: Context) = {
+	override def initialize(ctx: Context) = Try {
 		val system1 = ctx.inject[ActorSystem](Keys.ActorSystem1).get
 		val system2 = ctx.inject[ActorSystem].get
 		val log = ctx.inject[LoggingAdapterFactory].map(_ (getClass)).get

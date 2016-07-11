@@ -4,22 +4,23 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import eu.akkamo._
 
+import scala.util.Try
+
 
 class HttpModule extends Module with Initializable {
 
-	override def initialize(ctx: Context) = {
-		ctx.inject[RouteRegistry].map(bootstrap)
-	}
+  override def initialize(ctx: Context) = Try {
+    val route: Route = get {
+      path("todo") {
+        complete("HELLO, world!")
+      }
+    }
 
-	override def dependencies(dependencies: Dependency): Dependency =
-		dependencies.&&[ConfigModule].&&[LogModule].&&[AkkaModule].&&[AkkaModule]
+    ctx.registerIn[RouteRegistry, Route](route)
 
-	private def bootstrap(registry: RouteRegistry) = {
-		val route: Route = get {
-			path("todo") {
-				complete("HELLO, world!")
-			}
-		}
-		registry.register(route)
-	}
+  }
+
+  override def dependencies(dependencies: Dependency): Dependency =
+    dependencies.&&[AkkaHttpModule]
+
 }
