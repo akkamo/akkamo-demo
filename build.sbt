@@ -12,7 +12,7 @@ cancelable in Global := true
 
 fork in(IntegrationTest, run) := false
 
-lazy val akkamoVersion = "1.0.0-SNAPSHOT"
+lazy val akkamoVersion = "1.0.0"
 
 lazy val akkamoDemo = project.in(file(".")).dependsOn(pingAkkamo, pongAkkamo, httpAkkamo).settings(
 	name := "akkamo-demo",
