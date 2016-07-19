@@ -16,7 +16,7 @@ lazy val akkamoVersion = "1.0.0-SNAPSHOT"
 
 lazy val akkamoDemo = project.in(file(".")).dependsOn(pingAkkamo, pongAkkamo, httpAkkamo).settings(
 	name := "akkamo-demo",
-	mainClass in Compile := Some("eu.akkamo.Akkamo")
+	mainClass in Compile := Some("eu.akkamo.Main")
 ).enablePlugins(JavaAppPackaging, AkkamoSbtPlugin)
 
 lazy val pingAkkamo = project.in(file("pingAkkamo")).settings(
