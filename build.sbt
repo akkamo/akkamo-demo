@@ -12,7 +12,7 @@ cancelable in Global := true
 
 fork in(IntegrationTest, run) := false
 
-lazy val akkamoVersion = "1.0.0"
+lazy val akkamoVersion = "1.0.1-SNAPSHOT"
 
 lazy val akkamoDemo = project.in(file(".")).dependsOn(pingAkkamo, pongAkkamo, httpAkkamo).settings(
 	name := "akkamo-demo",
@@ -39,6 +39,7 @@ lazy val httpAkkamo = project.in(file("httpAkkamo")).settings(
 	name := "akkamo-http",
 	libraryDependencies ++= Seq(
 		"eu.akkamo" %% "akkamo-akka-http" % akkamoVersion,
+		"eu.akkamo" %% "akkamo-web-content" % akkamoVersion,
 		"org.scalaz" %% "scalaz-core" % "7.2.2"
 	)
 )

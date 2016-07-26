@@ -15,9 +15,7 @@ class HttpModule extends Module with Initializable {
         complete("HELLO, world!")
       }
     }
-
     ctx.registerIn[RouteRegistry, Route](route)
-
   }
 
   override def dependencies(dependencies: Dependency): Dependency =
