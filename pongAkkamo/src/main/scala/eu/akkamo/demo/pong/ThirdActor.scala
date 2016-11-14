@@ -9,7 +9,6 @@ class ThirdActor(sysName: String) extends Actor {
 
 	val mediator: ActorRef = DistributedPubSub(context.system).mediator
 
-
 	override def receive: Receive = {
 		case m@PongMessage(passed) => publish(m)
 	}

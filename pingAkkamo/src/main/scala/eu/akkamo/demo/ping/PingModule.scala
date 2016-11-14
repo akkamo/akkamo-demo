@@ -11,7 +11,6 @@ class PingModule extends Module with Initializable with Runnable {
 
   var firstActor: ActorRef = _
 
-
   override def initialize(ctx: Context) = Try {
     val system1 = ctx.inject[ActorSystem](Keys.ActorSystem1).get
     val system2 = ctx.inject[ActorSystem].get

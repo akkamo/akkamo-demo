@@ -20,5 +20,4 @@ class HttpModule extends Module with Initializable {
 
   override def dependencies(dependencies: Dependency): Dependency =
     dependencies.&&[AkkaHttpModule]
-
 }
