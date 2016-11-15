@@ -14,33 +14,32 @@ fork in(IntegrationTest, run) := false
 
 lazy val akkamoVersion = "1.1.0-SNAPSHOT"
 
-lazy val akkamoDemo = project.in(file(".")).dependsOn(httpAkkamo).settings(//.dependsOn(pingAkkamo, pongAkkamo, httpAkkamo).settings(
+lazy val akkamoDemo = project.in(file(".")).dependsOn(pingAkkamo, pongAkkamo, httpAkkamo).settings(
   name := "akkamo-demo",
   mainClass in Compile := Some("eu.akkamo.Main")
 ).enablePlugins(JavaAppPackaging, AkkamoSbtPlugin)
 
-/*
 lazy val pingAkkamo = project.in(file("pingAkkamo")).settings(
   name := "akkamo-ping",
   libraryDependencies ++= Seq(
-    "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.9",
-    "eu.akkamo" %% "akkamo" % akkamoVersion
+    "eu.akkamo" %% "akkamo" % akkamoVersion,
+    "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.12"
   )
 ).dependsOn(pongAkkamo)
 
 lazy val pongAkkamo = project.in(file("pongAkkamo")).settings(
   name := "akkamo-pong",
   libraryDependencies ++= Seq(
-    "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.9",
-    "eu.akkamo" %% "akkamo" % akkamoVersion
+    "eu.akkamo" %% "akkamo" % akkamoVersion,
+    "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.12"
   )
-)*/
+)
 
 lazy val httpAkkamo = project.in(file("httpAkkamo")).settings(
   name := "akkamo-http",
   libraryDependencies ++= Seq(
-    "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.9",
-    "eu.akkamo" %% "akkamo-akka-http" % akkamoVersion,
+    "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.12",
+    "eu.akkamo" %% "akkamo-akka-http-dependencies" % "2.4.11",
     "eu.akkamo" %% "akkamo-web-content" % akkamoVersion,
     "org.scalaz" %% "scalaz-core" % "7.2.2"
   )
