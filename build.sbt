@@ -22,7 +22,7 @@ lazy val akkamoDemo = project.in(file(".")).dependsOn(pingAkkamo, pongAkkamo, ht
 lazy val pingAkkamo = project.in(file("pingAkkamo")).settings(
   name := "akkamo-ping",
   libraryDependencies ++= Seq(
-    "eu.akkamo" %% "akkamo" % akkamoVersion,
+    "eu.akkamo" %% "akkamo-akka-log" % akkamoVersion,
     "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.12"
   )
 ).dependsOn(pongAkkamo)
@@ -30,7 +30,8 @@ lazy val pingAkkamo = project.in(file("pingAkkamo")).settings(
 lazy val pongAkkamo = project.in(file("pongAkkamo")).settings(
   name := "akkamo-pong",
   libraryDependencies ++= Seq(
-    "eu.akkamo" %% "akkamo" % akkamoVersion,
+    "eu.akkamo" %% "akkamo-akka-log" % akkamoVersion,
+    "eu.akkamo" %% "akkamo-akka" % akkamoVersion,
     "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.12"
   )
 )
@@ -38,7 +39,6 @@ lazy val pongAkkamo = project.in(file("pongAkkamo")).settings(
 lazy val httpAkkamo = project.in(file("httpAkkamo")).settings(
   name := "akkamo-http",
   libraryDependencies ++= Seq(
-    "eu.akkamo" %% "akkamo-akka-dependencies" % "2.4.12",
     "eu.akkamo" %% "akkamo-akka-http-dependencies" % "2.4.11",
     "eu.akkamo" %% "akkamo-web-content" % akkamoVersion,
     "org.scalaz" %% "scalaz-core" % "7.2.2"
