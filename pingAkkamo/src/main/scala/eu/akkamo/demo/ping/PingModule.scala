@@ -13,11 +13,10 @@ class PingModule extends Module with Initializable with Runnable {
 
 
   override def initialize(ctx: Context) = Try {
-    val system1 = ctx.inject[ActorSystem](Keys.ActorSystem1).get
-    val system2 = ctx.inject[ActorSystem].get
-    val secondActor = ctx.inject[ActorRef]("secondActor").get
-    val log = ctx.inject[LoggingAdapterFactory].map(_ (getClass)).get
-
+    val system1 = ctx.get[ActorSystem](Keys.ActorSystem1)
+    val system2 = ctx.get[ActorSystem]
+    val secondActor = ctx.get[ActorRef]("secondActor")
+    val log = ctx.get[LoggingAdapterFactory].apply(getClass)
     log.info("Initializing 'Ping' Akkamo module")
 
     firstActor = system1.actorOf(Props(new FirstActor(secondActor, system1.name)))
@@ -25,11 +24,11 @@ class PingModule extends Module with Initializable with Runnable {
     ctx
   }
 
-  override def dependencies(dependencies: Dependency): Dependency =
+  override def dependencies(dependencies: TypeInfoChain): TypeInfoChain =
     dependencies.&&[AkkaModule].&&[LogModule].&&[PongModule]
 
   override def run(ctx: Context) = Try {
-    implicit val system1 = ctx.inject[ActorSystem](Keys.ActorSystem1).get.dispatcher
+    implicit val system1 = ctx.get[ActorSystem](Keys.ActorSystem1).dispatcher
     Future {
       Try(Thread.sleep(5000))
       firstActor ! PongMessage(List.empty[String])

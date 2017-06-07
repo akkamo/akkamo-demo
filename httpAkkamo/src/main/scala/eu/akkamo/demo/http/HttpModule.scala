@@ -18,7 +18,6 @@ class HttpModule extends Module with Initializable {
     ctx.registerIn[RouteRegistry, Route](route)
   }
 
-  override def dependencies(dependencies: Dependency): Dependency =
-    dependencies.&&[AkkaHttpModule]
+  override def dependencies(dependencies: TypeInfoChain): TypeInfoChain = dependencies.&&[RouteRegistry]
 
 }
